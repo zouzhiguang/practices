@@ -61,11 +61,34 @@ Palindrome Min Cut
 
 
 maximum product sub array:
+1. max[i] is current maximum product, min[i] is current minimal product
+   we record maximal and minimal because there may be negative numbers which either current should fall in either max or min
+   As we only need the last index value of max and min, so no need to keep all the value there.
+2. max = min = A[0]
+3. max = Math.max(Math.max(A[i], lastMax * A[i]), lastMin * A[i])
+   min = Math.min(Math.min(A[i], lastMax * A[i]), lastMin * A[i]) 
+4. max during iteration.
 
+Jump game I: 
+Question: given an array of integer, which refers to the length it can reach. determine if given array can jump from first index to the last
+solution: use greedy thinking, if index can reach end, then just determine whether can reach index which index <- 0...index.
+init: index = end = nums.length - 1;
+iteration: while(index >= 0) if(nums[index] >= end - index) end = index; index--;
+result: end == 0;
 
-Jump game: 
+Jump game II: 
+jump from first to the last, for the min number of jump
+
+1. state[i] is the min step needed for jump from 0 to i
+2. state[i] = Integer.MAX_VALUE, state[0] = 0;
+3. reachable = Math.max(reachable, A[i]), for j <- i - reachable (min=0) to i; 
+   if(state[j] != Integer.MAX_VALUE && state[j] + 1 < state[i]) state[i] = state[j] + 1; 
+
+4. state[nums.length - 1]
 
 ## Two Sequences: 
+Interleaving string
+
 
 
 

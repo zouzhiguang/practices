@@ -210,7 +210,7 @@ Problem: from top left to bottom right, each cell can add-up / lose health point
 ```
 
 [Maximum Rectangle](https://leetcode.com/problems/maximal-rectangle/)
-
+```
 state[i][j] is the maximum area that included the point [i,j].
 
 then state[i][j] is separated into three component: 
@@ -224,10 +224,25 @@ transfer function:
 left[j] = if(matrix[i][j] == 1) min(left[j - 1], currentLineLeft); else 0
 right[j] = if(matrix[i][j] == 1) min(right[j + 1], currentLineRight); else 0
 height[i] = if(matrix[i][j] == 1) height[i] = 1 else 0
+```
+..* left distance should be calculated from left to right, and right distance from right to left
+..* as we use min to calculate left & right distances, their default values should be some big enough number
+..* since left & right distances are inclusive of current element, we should -1 when calculating width to avoid double counting
 
-..*left distance should be calculated from left to right, and right distance from right to left
-..*as we use min to calculate left & right distances, their default values should be some big enough number
-..*since left & right distances are inclusive of current element, we should -1 when calculating width to avoid double counting
+
+[Maximal Square](https://leetcode.com/problems/maximal-square/)
+```
+1. state[i][j] is the maximal edge's length of the square bottom right by point [i,j]
+2. init: all 0
+3. transfer: state[i][j] = min(state[i-1][j], state[i][j-1], state[i-1][j-1]) + 1;
+4. max(state[i][j])^2
+
+eg: 
+1 1 1
+1 1 1
+1 1 1
+state[3][3] = 3 if and only if state[3][2] = state[2][3] = state[2][2] = 2 and matrix[3][3] = 1
+```
 
 
 

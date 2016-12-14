@@ -60,4 +60,23 @@ public class NextPermutation {
 		nums[a] = nums[b];
 		nums[b] = tmp;
 	}
+
+	// can given s permute and become a palindrome?
+	public boolean palindromePermutation(String s){
+		int[] counts = new int[256];
+		int odd = 0;
+		for(char c : s.toCharArray()){
+			odd += ++counts[c] % 2 == 1 ? 1 : -1;
+		}
+
+		return odd <= 1;
+	}
+
+	// return all s permutation (without dup) that is palindrome
+	public List<String> allPalindromePermutation(String s){
+		List<String> result = new ArrayList<>();
+		if(s == null || s.isEmpty() || !palindromePermutation(s)) return result;
+		
+		permute()
+	}
 }

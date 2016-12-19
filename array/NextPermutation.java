@@ -76,7 +76,63 @@ public class NextPermutation {
 	public List<String> allPalindromePermutation(String s){
 		List<String> result = new ArrayList<>();
 		if(s == null || s.isEmpty() || !palindromePermutation(s)) return result;
-		
-		permute()
+
+		// frequency map all char
+		int[] count = new int[256];
+		int odd = 0
+		// count all char and check if have middle char (only single time)
+		for(char c : s.toCharArray()){
+			count[c]++;
+			odd += count[c] % 2 == 1? 1 : -1;
+		}
+
+		if(odd > 1) return result;
+		char middle = null;
+		int length;
+		for(int i = 0; i < 256; i++){
+			if(count[i] == 0) continue;
+			if(count[i] % 2 == 1){ 
+				middle = (char) i;
+			}
+
+			count[i] /= 2;
+		}
+
+		// generate all permutations:
+		dfs(count, new char[s.length() / 2], 0, middle, result);
+	}
+
+	private void dfs(int[] count, char[] cs, int offset, char middle, List<String> result){
+		if(offset == cs.length){
+			result.add(toString(cs, middle));
+			return;
+		}
+
+		for(int i = 0; i < 256; i++){
+			if(count[i] > 0){
+				count[i]--;
+				cs[offset] = (char) i;
+				dfs(count, cs, offset + 1, middle, result);
+				cs[offset] = null;
+				count[i]++;
+			}
+		}
+	}
+
+	private String toString(char[] cs, char middle){
+		StringBuilder sb = new StringBuilder(cs.length * 2 + 1);
+		for(char c : cs){
+			sb.append(c);
+		}
+
+		if(middle != null){
+			sb.append(middle);
+		}
+
+		for(int i = cs.length - 1; i >= 0; i--){
+			sb.append(cs[i]);
+		}
+
+		return sb.toString();
 	}
 }

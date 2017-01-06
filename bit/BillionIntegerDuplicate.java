@@ -30,7 +30,10 @@ public class BillionIntegerDuplicate {
         while (magic <= radix) {
             //make a scan:
             while (input.hasNext()) {
-                if (++count[input.nextInt() & mask] > radix)
+                int num = input.nextInt();
+                int token = magic << 20 | mask;
+                if((num & token) != 0) continue;
+                if (++count[num & mask] > radix)
                     break OUTER;
             }
             magic++;

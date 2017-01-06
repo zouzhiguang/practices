@@ -83,3 +83,50 @@ THIS PROBLEM <LINKED LIST RANDOM NODE>
 
 This problem is the sp case where k=1
 ```
+
+[335. Self Crossing](https://leetcode.com/problems/self-crossing/): array x[] is distance when go North, West, South, East, iteratively. eg, [1,2,1,1] means go N = 1, then W = 2, then S = 1, last E = 1. can more than 4 values then means keep going. Provided such array, check if any path is crossing with any others.
+```
+Example 1:
+Given x = 
+[2, 1, 1, 2]
+,
+┌───┐
+│   │
+└───┼──>
+    │
+
+Return true (self crossing)
+Example 2:
+Given x = 
+[1, 2, 3, 4]
+,
+┌──────┐
+│      │
+│
+│
+└────────────>
+
+Return false (not self crossing)
+Example 3:
+Given x = 
+[1, 1, 1, 1]
+,
+┌───┐
+│   │
+└───┼>
+
+Return true (self crossing)
+```
+Solution:
+```
+It has two general solution: 
+first is to check what condition it does not cross. then if satisfy, it means the it can not cross.
+1. it spin in, eg, [9,9,8,8,7,7,6,6,5,5,4,4,3,3,2,2,1]
+2. it spin out, eg, [1,2,3,4,5,6,7,8,9,10,....]
+3. it first spin out, and then it spin in. [1,2,3,4,5,6,7,16,7,6,5,4,3,2,1]
+
+Second is to define the condition when it crosses: 
+Categorize the self-crossing scenarios, there are 3 of them: 
+1. Fourth line crosses first line and works for fifth line crosses second line and so on...
+2. Fifth line meets first line and works for the lines after
+3. Sixth line crosses first line and works for the lines after

@@ -12,14 +12,25 @@ public class MinArray {
 		min.push(0);
 		max.push(0)
 		for(int i = 1; i < nums.length; i++){
-			if(nums[i] < nums[min.peek()]) min.push(i);
-			if(nums[i] > nums[max.peek()]) max.push(i);
+			if(nums[i] <= nums[min.peek()]) min.push(i);
+			if(nums[i] >= nums[max.peek()]) max.push(i);
 		}
 
-		int count = Integer.MAX_VALUE;
+		int count = Integer.MAX_VALUE, left = 0, right = length - 1;
 		while(!min.isEmpty() && max.isEmpty()){
 			if(square(nums[min.peek()])  < nums[max.peek()]){
-				count = Math.min(count, getCount(min.peek(), max.peek(), nums.length - 1));
+				int current = getCount(min.peek(), max.peek(), nums.length - 1);
+				if(current < count){
+					count = current;
+					left = Math.min(min.peek(), max.peek());
+					right = Math.max(min.peek(), max.peek());
+				}
+
+				if(max.peek() != 0) max.pop();
+				else min.pop();
+			}else{
+				if(min.peek() != 0) min.pop();
+				else max.pop();
 			}
 		}
 	}

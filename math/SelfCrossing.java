@@ -8,6 +8,7 @@ public class SelfCrossing {
         if(x == null || x.length <= 3) return false;
         return !isSpinIn(x, 0, x.length - 1) && !isSpinOut(x, 0, x.length - 1);
     }
+
     // spin-in, if cross, return false.
     private boolean isSpinIn(int[] x, int from, int end) {
         for(int i = from, j = from + 2; j <= end; i++, j++)
@@ -15,6 +16,7 @@ public class SelfCrossing {
                 return false;
         return true;
     }
+    
     // spin-out / spin-out to spin in.
     private boolean isSpinOut(int[] x, int from, int end) {
         for(int i = from, j = from + 2; j < end; i++, j++)

@@ -46,13 +46,30 @@ public class TreeTraversal {
 
 	private void inOrderRecursive(TreeNode node, List<Integer> result){
 		if(node == null) return;
-		inOrderRecursive(node.left);
+		inOrderRecursive(node.left, result);
 		result.add(node.val);	
-		inOrderRecursive(node.right);
+		inOrderRecursive(node.right, result);
 	}
 
 	public List<Integer> inOrderIterative(TreeNode root){
 		List<Integer> result = new ArrayList<>();
+		Stack<TreeNode> stack = new Stack<>();
+		Set<TreeNode> visited = new HashSet<>();
+		if(root == null) return result;
+		stack.push(root);
+
+		while(!stack.isEmpty()){
+			TreeNode current = stack.pop();
+			if(current.right != null && !visited.contains(current)) stack.push(current.right);
+			if(current.left == null || visited.contains(current)) result.add(current.val);
+			else {
+				stack.push(current);
+				visited.add(current);
+				stack.push(current.left);
+			}
+		}
+
+		return result;
 	}
 
 	public List<Integer> postOrderRecursive(TreeNode root){

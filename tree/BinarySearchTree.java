@@ -101,4 +101,45 @@ public class BinarySearchTree {
 	public TreeNode successor(TreeNode node){
 		
 	}
+ 
+
+ 	// problem: bst中有两个节点错误的互调了，找出并恢复bst的顺序
+	// BST的中序遍历就是从小到大的顺序排列， 因此可以比较前后顺序来确定哪两个节点错了
+
+	// 正确的顺序： 1，2，3，4，5，6，7
+	// 错误的顺序： 1，2，6，4，5，3，7  （调换了3和6），于是first -> 6, second -> 3
+	// 这里有点小的tricky，每次发现 prev.val > current.val的时候，都令 second = current，而只有first是null的时候才first=prev，这样就记录了两个坏点
+
+	TreeNode first, second, prev; // 错误的两个节点, prev纪录上一个访问的节点
+	public void recoverTree(TreeNode root) {
+    	//use inorder traversal to detect incorrect node
+    
+    	inOrder(root);
+
+	    int temp = first.val;
+	    first.val = second.val;
+	    second.val = temp;
+	}
+
+	// 中序遍历 -》 左 -> 根 -> 右
+	public void inOrder(TreeNode root){
+	    if(root == null) return;
+	    //search left tree
+	    inOrder(root.left);
+	    
+	    //in inorder traversal of BST, prev should always have smaller value than current value
+	    if(prev != null && prev.val >= root.val){
+	        //incorrect smaller node is always found as prev node
+	        if(first == null) first = prev;
+	      //incorrect larger node is always found as curr(root) node
+	        second = root;
+	    }
+	    
+	    
+	    //update prev node
+	    prev = root;
+
+	    //search right tree
+	    inOrder(root.right);
+	}
 }
